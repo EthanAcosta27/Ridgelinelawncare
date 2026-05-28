@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — Ridgeline Lawn Care</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231a3525'/><text x='16' y='24' font-family='Arial Black,sans-serif' font-size='22' font-weight='900' text-anchor='middle' fill='%237aab2e'>R</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #1a3525;
+      --mid:     #254d35;
+      --accent:  #5a8a22;
+      --light:   #7aab2e;
+      --offwhite:#f4f6f0;
+      --white:   #ffffff;
+      --text:    #1a3525;
+      --muted:   #4a6455;
+      --border:  #d4e4d0;
+      --shadow:  rgba(26,53,37,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+
+    /* ─── NAVBAR ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(26,53,37,0.97);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 70px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .nav-logo-text .brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: 0.12em; color: var(--white); text-transform: uppercase; }
+    .nav-logo-text .sub { font-family: 'Inter', sans-serif; font-size: 0.6rem; letter-spacing: 0.22em; color: var(--light); text-transform: uppercase; }
+
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--light); }
+    .nav-links a.active { color: var(--light); }
+    .nav-cta { background: var(--accent); color: var(--white) !important; padding: 9px 22px; border-radius: 4px; font-weight: 600 !important; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--light) !important; color: var(--white) !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+    /* ─── PAGE HEADER ────────────────────────────────── */
+    .page-header {
+      background: var(--dark);
+      padding: 140px 5% 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(90,138,34,0.18) 0%, transparent 70%);
+    }
+    .page-header .section-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--light); margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: clamp(2.4rem, 5vw, 4rem);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--white); line-height: 1.05; margin-bottom: 16px;
+      position: relative;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.7;
+      max-width: 500px; margin: 0 auto;
+      position: relative;
+    }
+    .divider { width: 52px; height: 3px; background: var(--accent); margin: 20px auto; border-radius: 2px; }
+
+    /* ─── GALLERY GRID ───────────────────────────────── */
+    .gallery-section { padding: 80px 5%; background: var(--offwhite); }
+    .gallery-inner { max-width: 1200px; margin: 0 auto; }
+
+    .gallery-grid {
+      columns: 3;
+      column-gap: 20px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      display: block;
+    }
+    .gallery-item img {
+      width: 100%; height: auto; display: block;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,53,37,0.75) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex; align-items: flex-end; padding: 20px;
+    }
+    .gallery-item-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--white);
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+    /* ─── EMPTY STATE ────────────────────────────────── */
+    .gallery-empty {
+      text-align: center; padding: 80px 24px;
+      border: 2px dashed var(--border);
+      border-radius: 12px; background: var(--white);
+    }
+    .gallery-empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+    .gallery-empty h3 {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.5rem;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--dark); margin-bottom: 8px;
+    }
+    .gallery-empty p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* ─── CTA STRIP ──────────────────────────────────── */
+    .gallery-cta {
+      background: var(--dark); padding: 72px 5%; text-align: center;
+    }
+    .gallery-cta h2 {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3vw, 2.6rem);
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); margin-bottom: 12px;
+    }
+    .gallery-cta p { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 32px; }
+    .btn-primary {
+      background: var(--accent); color: var(--white);
+      padding: 15px 36px; border-radius: 4px;
+      font-weight: 600; font-size: 0.9rem; letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--light); transform: translateY(-2px); }
+
+    /* ─── LIGHTBOX ───────────────────────────────────── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.92);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img {
+      max-width: 100%; max-height: 90vh;
+      border-radius: 8px;
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+    .lightbox.open img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 24px;
+      color: rgba(255,255,255,0.7); font-size: 2rem; cursor: pointer;
+      background: none; border: none; line-height: 1;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: var(--white); }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: #0f2218;
+      padding: 52px 5% 32px;
+      color: rgba(255,255,255,0.55);
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 44px; }
+    .footer-brand .nav-logo { margin-bottom: 16px; display: inline-flex; }
+    .footer-brand p { font-size: 0.875rem; line-height: 1.7; max-width: 280px; }
+    .footer-col h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--light); }
+    .footer-col ul li { font-size: 0.875rem; }
+    .footer-social { display: flex; gap: 14px; margin-top: 20px; }
+    .social-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 18px; border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-btn:hover { border-color: var(--light); color: var(--light); }
+    .social-btn svg { flex-shrink: 0; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; flex-wrap: wrap; gap: 8px; }
+    .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+
+    /* ─── MOBILE ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .gallery-grid { columns: 2; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: rgba(26,53,37,0.98); padding: 20px 5%; gap: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .gallery-grid { columns: 1; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-text">
+        <span class="brand">Ridgeline</span>
+        <span class="sub">Lawn Care</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#why">Why Us</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="index.html#quote" class="nav-cta">Get a Quote</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <p class="section-label">Our Work</p>
+    <h1>The Results Speak<br>for Themselves</h1>
+    <div class="divider"></div>
+    <p>Every lawn we touch gets the full Ridgeline treatment. Here's a look at what we leave behind.</p>
+  </div>
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <div class="gallery-inner">
+
+      <!--
+        TO ADD PHOTOS: Replace the <img> src values below with your actual image paths.
+        Example: <img src="photos/front-yard-1.jpg" alt="Front yard after mowing" />
+        You can add or remove .gallery-item blocks as needed.
+      -->
+
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Photos will go here — see instructions above -->
+      </div>
+
+      <div class="gallery-empty" id="galleryEmpty">
+        <div class="gallery-empty-icon">📸</div>
+        <h3>Photos Coming Soon</h3>
+        <p>We're out doing the work — check back soon for photos of finished lawns from our latest jobs.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="gallery-cta">
+    <h2>Ready for Your Lawn<br>to Look Like This?</h2>
+    <p>Get a free, no-obligation quote for your property.</p>
+    <a href="index.html#quote" class="btn-primary">Get a Free Quote</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-text">
+            <span class="brand">Ridgeline</span>
+            <span class="sub">Lawn Care</span>
+          </div>
+        </a>
+        <p>Locally owned and operated. We take pride in quality work and reliable service for every property we touch.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/ridgelinelawncare" target="_blank" rel="noopener" class="social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.facebook.com/share/1Dvfo4x4PA/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li>Mowing</li>
+          <li>Weedeating</li>
+          <li>Edging</li>
+          <li>Blowing</li>
+          <li>Mulching</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#why">Why Us</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="index.html#quote">Get a Quote</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:8645179080">(864) 517-9080</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Ridgeline Lawn Care. All rights reserved.</span>
+      <span>Built with care by Ethan &amp; Wyatt</span>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img src="" alt="" id="lightboxImg" />
+  </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').style.boxShadow =
+        window.scrollY > 10 ? '0 2px 24px rgba(0,0,0,0.25)' : 'none';
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        lightboxImg.src = item.querySelector('img').src;
+        lightboxImg.alt = item.querySelector('img').alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    // Hide empty state if photos exist
+    const grid = document.getElementById('galleryGrid');
+    const empty = document.getElementById('galleryEmpty');
+    if (grid.children.length > 0) empty.style.display = 'none';
+  </script>
+</body>
+</html>
