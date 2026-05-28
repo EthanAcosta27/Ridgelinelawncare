@@ -691,16 +691,31 @@
 
     function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button[type="submit"]');
-      btn.textContent = 'Request Sent!';
-      btn.style.background = 'var(--dark)';
+      const form = e.target;
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending...';
       btn.disabled = true;
-      setTimeout(() => {
-        e.target.reset();
-        btn.textContent = 'Send My Request';
-        btn.style.background = '';
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      })
+      .then(() => {
+        btn.textContent = 'Request Sent!';
+        btn.style.background = 'var(--dark)';
+        setTimeout(() => {
+          form.reset();
+          btn.textContent = 'Send My Request';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 3000);
+      })
+      .catch(() => {
+        btn.textContent = 'Error — Please Try Again';
+        btn.style.background = '#c0392b';
         btn.disabled = false;
-      }, 3000);
+      });
     }
 
     // Subtle nav shadow on scroll
