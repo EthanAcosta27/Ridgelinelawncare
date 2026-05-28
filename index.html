@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -675,8 +676,7 @@
       <h2 class="section-title">Get a Quote</h2>
       <div class="divider" style="margin:20px auto"></div>
       <p class="section-sub">Fill out the form and we'll get back to you with a price — usually pretty quick. No pressure, just a straight answer.</p>
-      <form class="quote-form" id="quoteForm" name="quote" netlify onsubmit="handleSubmit(event)">
-        <input type="hidden" name="form-name" value="quote" />
+      <form class="quote-form" id="quoteForm" onsubmit="handleSubmit(event)">
         <div class="form-group">
           <label for="fname">First Name</label>
           <input type="text" id="fname" name="fname" placeholder="John" required />
@@ -806,6 +806,8 @@
       link.addEventListener('click', () => navLinks.classList.remove('open'));
     });
 
+    emailjs.init('ZwNkaj4lN6gVhskXg');
+
     function handleSubmit(e) {
       e.preventDefault();
       const form = e.target;
@@ -820,27 +822,34 @@
       btn.textContent = 'Sending...';
       btn.disabled = true;
 
-      const data = new FormData(form);
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-      })
-      .then(() => {
-        btn.textContent = 'Request Sent!';
-        btn.style.background = 'var(--dark)';
-        setTimeout(() => {
-          form.reset();
-          btn.textContent = 'Send My Request';
-          btn.style.background = '';
+      const mulchTypeEl = form.querySelector('#mulchType');
+      const templateParams = {
+        fname: form.fname.value,
+        lname: form.lname.value,
+        phone: form.phone.value,
+        email: form.email.value,
+        services: checked.map(cb => cb.value).join(', '),
+        mulch_type: mulchTypeEl && mulchTypeEl.value ? mulchTypeEl.value : 'N/A',
+        address: form.address.value,
+        message: form.message.value
+      };
+
+      emailjs.send('service_c8yrlyn', 'x3lgq9p', templateParams)
+        .then(() => {
+          btn.textContent = 'Request Sent!';
+          btn.style.background = 'var(--dark)';
+          setTimeout(() => {
+            form.reset();
+            btn.textContent = 'Send My Request';
+            btn.style.background = '';
+            btn.disabled = false;
+          }, 3000);
+        })
+        .catch(() => {
+          btn.textContent = 'Error — Please Try Again';
+          btn.style.background = '#c0392b';
           btn.disabled = false;
-        }, 3000);
-      })
-      .catch(() => {
-        btn.textContent = 'Error — Please Try Again';
-        btn.style.background = '#c0392b';
-        btn.disabled = false;
-      });
+        });
     }
 
     // Subtle nav shadow on scroll
