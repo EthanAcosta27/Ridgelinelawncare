@@ -61,9 +61,14 @@
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
-    .nav-logo-text .brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: 0.12em; color: var(--white); text-transform: uppercase; }
-    .nav-logo-text .sub { font-family: 'Inter', sans-serif; font-size: 0.6rem; letter-spacing: 0.22em; color: var(--light); text-transform: uppercase; }
+    .nav-logo-badge {
+      background: var(--white); border-radius: 8px;
+      padding: 6px 14px; display: flex; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+      transition: transform 0.2s;
+    }
+    .nav-logo:hover .nav-logo-badge { transform: translateY(-1px); }
+    .nav-logo-badge img { height: 50px; width: auto; display: block; }
     .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
     .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--light); }
@@ -179,9 +184,8 @@
   <!-- NAVBAR -->
   <nav>
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-text">
-        <span class="brand">Ridgeline</span>
-        <span class="sub">Lawn Care</span>
+      <div class="nav-logo-badge">
+        <img src="logo.png" alt="Ridgeline Lawn Care" />
       </div>
     </a>
     <ul class="nav-links" id="navLinks">
@@ -250,9 +254,8 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="index.html" class="nav-logo">
-          <div class="nav-logo-text">
-            <span class="brand">Ridgeline</span>
-            <span class="sub">Lawn Care</span>
+          <div class="nav-logo-badge">
+            <img src="logo.png" alt="Ridgeline Lawn Care" />
           </div>
         </a>
         <p>Just two guys doing good work and standing behind every yard we touch.</p>
