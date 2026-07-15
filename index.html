@@ -666,8 +666,8 @@
                 <input type="checkbox" name="service" value="Hedge Trimming" />
                 <span class="checkbox-label">Hedge Trimming</span>
               </label>
-              <label class="checkbox-option">
-                <input type="checkbox" name="service" value="Cleanups" />
+              <label class="checkbox-option" id="cleanupCheckbox">
+                <input type="checkbox" name="service" value="Cleanups" id="cleanupCheck" />
                 <span class="checkbox-label">Cleanups</span>
               </label>
               <label class="checkbox-option" id="smallProjectCheckbox">
@@ -684,6 +684,16 @@
             <option value="Straw">Straw</option>
             <option value="Woodchips">Woodchips</option>
             <option value="Gravel">Gravel</option>
+          </select>
+        </div>
+        <div class="form-group full" id="cleanupTypeGroup" style="display:none">
+          <label for="cleanupType">Cleanup Type</label>
+          <select id="cleanupType" name="cleanup-type">
+            <option value="" disabled selected>Select a type...</option>
+            <option value="Leaves">Leaves</option>
+            <option value="Storm Debris">Storm Debris</option>
+            <option value="Overgrown Beds">Overgrown Beds</option>
+            <option value="General Yard Cleanup">General Yard Cleanup</option>
           </select>
         </div>
         <div class="form-group full" id="smallProjectGroup" style="display:none">
@@ -774,6 +784,10 @@
       document.getElementById('smallProjectGroup').style.display = this.checked ? 'flex' : 'none';
     });
 
+    document.getElementById('cleanupCheck').addEventListener('change', function() {
+      document.getElementById('cleanupTypeGroup').style.display = this.checked ? 'flex' : 'none';
+    });
+
     document.getElementById('fullServiceCheck').addEventListener('change', function() {
       document.getElementById('lawnDetailsGroup').style.display = this.checked ? 'flex' : 'none';
     });
@@ -812,6 +826,7 @@
       btn.disabled = true;
 
       const mulchTypeEl = form.querySelector('#mulchType');
+      const cleanupTypeEl = form.querySelector('#cleanupType');
       const smallProjectEl = form.querySelector('#smallProjectDetails');
       const templateParams = {
         fname: form.fname.value,
@@ -820,6 +835,7 @@
         email: form.email.value,
         services: checked.map(cb => cb.value).join(', '),
         mulch_type: mulchTypeEl && mulchTypeEl.value ? mulchTypeEl.value : 'N/A',
+        cleanup_type: cleanupTypeEl && cleanupTypeEl.value ? cleanupTypeEl.value : 'N/A',
         small_project_details: smallProjectEl && smallProjectEl.value.trim() ? smallProjectEl.value.trim() : 'N/A',
         address: form.address.value,
         message: form.message.value
