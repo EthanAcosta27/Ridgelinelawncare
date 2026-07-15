@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ridgeline Lawn Care</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231a3525'/><text x='16' y='24' font-family='Arial Black,sans-serif' font-size='22' font-weight='900' text-anchor='middle' fill='%237aab2e'>R</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link href="fonts/fonts.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js" integrity="sha384-SALc35EccAf6RzGw4iNsyj7kTPr33K7RoGzYu+7heZhT8s0GZouafRiCg1qy44AS" crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -27,6 +25,16 @@
 
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+
+    /* ─── SKIP LINK ──────────────────────────────────── */
+    .skip-link {
+      position: absolute; top: -48px; left: 12px; z-index: 2100;
+      background: var(--accent); color: var(--white);
+      padding: 12px 20px; border-radius: 4px;
+      font-size: 0.85rem; font-weight: 600; text-decoration: none;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 12px; }
 
     /* ─── CONTACT BAR ────────────────────────────────── */
     .contact-bar {
@@ -67,8 +75,12 @@
     .nav-cta { background: var(--accent); color: var(--white) !important; padding: 9px 22px; border-radius: 4px; font-weight: 600 !important; transition: background 0.2s !important; }
     .nav-cta:hover { background: var(--light) !important; color: var(--white) !important; }
 
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
     .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, .checkbox-option:focus-within {
+      outline: 2px solid var(--light); outline-offset: 2px;
+    }
 
     /* ─── HERO ───────────────────────────────────────── */
     #hero {
@@ -204,7 +216,7 @@
     .reviews-scroll {
       display: flex; gap: 24px;
       width: max-content;
-      animation: marquee 55s linear infinite;
+      animation: marquee 18s linear infinite;
     }
     @keyframes marquee {
       0%   { transform: translateX(0); }
@@ -337,6 +349,10 @@
     .checkbox-sub { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
     .form-submit { grid-column: 1 / -1; margin-top: 8px; }
     .form-submit .btn-primary { width: 100%; font-size: 0.95rem; padding: 16px; border-radius: 5px; display: block; text-align: center; }
+    .form-consent { font-size: 0.78rem; line-height: 1.6; color: var(--muted); text-transform: none; font-weight: 400; letter-spacing: normal; }
+    .form-consent a { color: var(--accent); }
+    /* honeypot — hidden from sighted users, still reachable by bots */
+    .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
     /* ─── FOOTER ─────────────────────────────────────── */
     footer {
@@ -390,6 +406,8 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Skip to main content</a>
+
   <!-- CONTACT BAR -->
   <div class="contact-bar">
     <a href="tel:8645179080">
@@ -417,11 +435,12 @@
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="#quote" class="nav-cta">Get a Quote</a></li>
     </ul>
-    <div class="hamburger" id="hamburger" aria-label="Menu">
+    <button type="button" class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
-    </div>
+    </button>
   </nav>
 
+  <main id="main">
   <!-- HERO -->
   <section id="hero">
     <div class="hero-bg"></div>
@@ -528,67 +547,27 @@
     </div>
     <div class="reviews-track">
       <div class="reviews-scroll">
-        <!-- Set 1 -->
+        <!-- Set 1 (real Google reviews) -->
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
+          <p class="review-text">"Excellent work, for excellent price! These guys are professional, dependable and consistent! I highly recommend giving them a try."</p>
+          <div class="review-author">— Shayla Irby, Google Review</div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
+          <p class="review-text">"They are very reliable and they follow through on whatever you asked them to do."</p>
+          <div class="review-author">— David Scott, Google Review</div>
         </div>
         <!-- Set 2 (duplicate for seamless loop) -->
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
+          <p class="review-text">"Excellent work, for excellent price! These guys are professional, dependable and consistent! I highly recommend giving them a try."</p>
+          <div class="review-author">— Shayla Irby, Google Review</div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Add your review here."</p>
-          <div class="review-author">— Customer Name</div>
+          <p class="review-text">"They are very reliable and they follow through on whatever you asked them to do."</p>
+          <div class="review-author">— David Scott, Google Review</div>
         </div>
       </div>
     </div>
@@ -693,22 +672,28 @@
           <label for="email">Email Address</label>
           <input type="email" id="email" name="email" placeholder="john@email.com" required />
         </div>
+        <div class="form-group full hp-field" aria-hidden="true">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="form-group full">
-          <label>Services Needed</label>
-          <div class="checkbox-group">
-            <label class="checkbox-option">
-              <input type="checkbox" name="service" value="Full Service Package (Mowing, Weedeating, Edging, Blowing)" />
-              <span class="checkbox-label">Full Service Package <span class="checkbox-sub">Mowing, Weedeating, Edging, Blowing</span></span>
-            </label>
-            <label class="checkbox-option" id="mulchCheckbox">
-              <input type="checkbox" name="service" value="Mulching" id="mulchCheck" />
-              <span class="checkbox-label">Mulching</span>
-            </label>
-            <label class="checkbox-option">
-              <input type="checkbox" name="service" value="Hedge Trimming" />
-              <span class="checkbox-label">Hedge Trimming</span>
-            </label>
-          </div>
+          <fieldset style="border:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
+            <legend style="font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); padding:0; margin-bottom:6px;">Services Needed</legend>
+            <div class="checkbox-group">
+              <label class="checkbox-option">
+                <input type="checkbox" name="service" value="Full Service Package (Mowing, Weedeating, Edging, Blowing)" />
+                <span class="checkbox-label">Full Service Package <span class="checkbox-sub">Mowing, Weedeating, Edging, Blowing</span></span>
+              </label>
+              <label class="checkbox-option" id="mulchCheckbox">
+                <input type="checkbox" name="service" value="Mulching" id="mulchCheck" />
+                <span class="checkbox-label">Mulching</span>
+              </label>
+              <label class="checkbox-option">
+                <input type="checkbox" name="service" value="Hedge Trimming" />
+                <span class="checkbox-label">Hedge Trimming</span>
+              </label>
+            </div>
+          </fieldset>
         </div>
         <div class="form-group full" id="mulchTypeGroup" style="display:none">
           <label for="mulchType">Mulch Type</label>
@@ -727,12 +712,14 @@
           <label for="message">Tell Us About Your Lawn</label>
           <textarea id="message" name="message" placeholder="Approximate size, any specific needs, how often you'd like service..."></textarea>
         </div>
+        <p class="form-group full form-consent">By submitting this form, you agree that Ridgeline Lawn Care may contact you by phone, text, or email about your quote. We don't share your information with anyone else. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>
         <div class="form-group form-submit">
           <button type="submit" class="btn-primary">Send My Request</button>
         </div>
       </form>
     </div>
   </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
@@ -785,7 +772,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Ridgeline Lawn Care. All rights reserved.</span>
+      <span>© <span id="year">2025</span> Ridgeline Lawn Care. All rights reserved. · <a href="privacy-policy.html">Privacy Policy</a></span>
       <span>Built with care by Ethan &amp; Wyatt</span>
     </div>
   </footer>
@@ -799,7 +786,8 @@
     const navLinks  = document.getElementById('navLinks');
 
     hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
     });
 
     document.querySelectorAll('.nav-links a').forEach(link => {
@@ -812,6 +800,11 @@
       e.preventDefault();
       const form = e.target;
       const btn = form.querySelector('button[type="submit"]');
+
+      // Honeypot: real visitors never fill this hidden field, bots often do
+      if (form.company.value.trim() !== '') {
+        return;
+      }
 
       const checked = [...form.querySelectorAll('input[name="service"]:checked')];
       if (checked.length === 0) {
@@ -857,6 +850,8 @@
       document.querySelector('nav').style.boxShadow =
         window.scrollY > 10 ? '0 2px 24px rgba(0,0,0,0.25)' : 'none';
     });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
