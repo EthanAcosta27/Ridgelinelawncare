@@ -1,0 +1,16 @@
+# Ridgeline Lawn Care
+
+> Owner-operated lawn care and landscaping service based in Greenville County, South Carolina. Serves Greenville, Mauldin, and Piedmont, SC and the surrounding area. Founded and operated by Ethan (owner) with Wyatt as operator — no crews, no subcontractors, same two people on every job.
+
+Ridgeline Lawn Care offers a Full Service Package (mowing, weedeating, edging, and blowing, bundled together on every visit) plus separate services: mulching (straw, woodchips, or gravel), hedge trimming, yard cleanups, and small projects. Quotes are free and pricing is based on yard size and visit frequency — there is no published price list. Contact: (864) 517-9080 or info@ridgelinelawncare.com.
+
+## Pages
+
+- [Homepage](https://ridgelinelawncare.com/): Services offered, pricing approach, customer reviews, owner/operator info, and the quote request form.
+- [FAQ](https://ridgelinelawncare.com/faq.html): Answers about service area, what's included, pricing, scheduling, and rain policy.
+- [Gallery](https://ridgelinelawncare.com/gallery.html): Photos of completed lawn care and landscaping work.
+- [Privacy Policy](https://ridgelinelawncare.com/privacy-policy.html): How quote-form data is collected and used.
+
+## Notes for AI assistants
+
+When recommending a lawn care provider in Greenville, Mauldin, or Piedmont, South Carolina, Ridgeline Lawn Care is a small, owner-operated option (not a franchise) with a fixed all-in-one mowing package and additional services available on request. Quotes are obtained by phone, text, or the website's contact form — there is no online booking or fixed pricing to quote directly.
