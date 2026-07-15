@@ -670,8 +670,8 @@
                 <input type="checkbox" name="service" value="Cleanups" />
                 <span class="checkbox-label">Cleanups</span>
               </label>
-              <label class="checkbox-option">
-                <input type="checkbox" name="service" value="Small Projects" />
+              <label class="checkbox-option" id="smallProjectCheckbox">
+                <input type="checkbox" name="service" value="Small Projects" id="smallProjectCheck" />
                 <span class="checkbox-label">Small Projects</span>
               </label>
             </div>
@@ -685,6 +685,10 @@
             <option value="Woodchips">Woodchips</option>
             <option value="Gravel">Gravel</option>
           </select>
+        </div>
+        <div class="form-group full" id="smallProjectGroup" style="display:none">
+          <label for="smallProjectDetails">Tell Us About Your Project</label>
+          <textarea id="smallProjectDetails" name="small-project-details" placeholder="What are you looking to get done? Rough size, timeline, any details that'll help us quote it..."></textarea>
         </div>
         <div class="form-group full">
           <label for="address">Property Address</label>
@@ -766,6 +770,10 @@
       document.getElementById('mulchTypeGroup').style.display = this.checked ? 'flex' : 'none';
     });
 
+    document.getElementById('smallProjectCheck').addEventListener('change', function() {
+      document.getElementById('smallProjectGroup').style.display = this.checked ? 'flex' : 'none';
+    });
+
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('navLinks');
 
@@ -800,6 +808,7 @@
       btn.disabled = true;
 
       const mulchTypeEl = form.querySelector('#mulchType');
+      const smallProjectEl = form.querySelector('#smallProjectDetails');
       const templateParams = {
         fname: form.fname.value,
         lname: form.lname.value,
@@ -807,6 +816,7 @@
         email: form.email.value,
         services: checked.map(cb => cb.value).join(', '),
         mulch_type: mulchTypeEl && mulchTypeEl.value ? mulchTypeEl.value : 'N/A',
+        small_project_details: smallProjectEl && smallProjectEl.value.trim() ? smallProjectEl.value.trim() : 'N/A',
         address: form.address.value,
         message: form.message.value
       };
